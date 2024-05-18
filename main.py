@@ -52,7 +52,7 @@ reference = "The image shows a kitchen scen where there is a dish drainer. Insid
 #     "yorickvp/llava-13b:a0fdc44e4f2e1f20f2bb4e27846899953ac8e66c5886c5878fa1d6b73ce009e5",
 #     input=input_data
 # )
-
+###=================== Executing LLaVA ====================###
 input_data={
     "image": input_image,
     "top_p": 1,
@@ -71,6 +71,7 @@ print(res)
 candidate = res
 print("\nCandidate: ", candidate)
 end = time.time()
+###=============== End of LLaVA ====================#####
 
 ############================== Extraction of the objects=============================##########################
 
@@ -252,20 +253,6 @@ plt.show()
 ####========= DRAWING THE DIAGRAM ===========####
 
 
-#####=============DINO================#####
-# output = replicate.run(
-#     "adirik/grounding-dino:efd10a8ddc57ea28773327e881ce95e20cc1d734c589f7dd01d2036921ed78aa",    
-#     input={
-#         "image": input_image,
-#         "query": found_items_query,
-#         "box_threshold": 0.35,
-#         "text_threshold": 0.25,
-#         "show_visualisation": True,   
-#     }
-# )
-#resultatet blir en JSON format med en länk som visar input bilden med resultatet
-#print(output)
-###===============END OF DINO============####
 
 ####====== CALCULATING THE COST OF THE GPU with REPLICATE TIME =====#####
 Total_cost,Predic_time = calculate_predi_time("0603dec596080fa084e26f0ae6d605fc5788ed2b1a0358cd25010619487eae63",input_data,0.000725)
@@ -276,21 +263,6 @@ Total_cost,Predic_time = calculate_predi_time("0603dec596080fa084e26f0ae6d605fc5
 time_exec = end - start
 print("time of execution: ", time_exec )
 
-# Tokenize the reference and candidate
-tokenized_reference = word_tokenize(reference)
-tokenized_candidate = word_tokenize(candidate)
-
-# Calculate METEOR score
-score = meteor_score([tokenized_reference], tokenized_candidate)
-print(f"METEOR Score: {score:.3f}")
-
-chencherry = SmoothingFunction()
-
-# Now, let's calculate the BLEU score with smoothing
-bleu_score = sentence_bleu([reference], candidate, 
-                           smoothing_function=chencherry.method4)  # reference tokens must be a list of lists
-
-print(f"BLEU Score: {bleu_score}\n")
 
 f.write(f"image: {image}, below are the measures for this image using the model LLaVA")
 f.write("\nReference text provided by the user:\n" + reference +"\n")
