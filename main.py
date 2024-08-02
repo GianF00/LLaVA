@@ -48,11 +48,13 @@ output = replicate.run(
     input=input_data1
 )
 
+
 res = "".join(output)
 end_describ = time.time()
 tot = end_describ - start_describ           #calculating the time that takes describe the picture
 
 print("\n",res,"\n")
+####========================= Extracting the objects in JSON format ===============######
 new_res = res.replace('json', '').replace("```", "")
 print(f"\n {new_res}")
 with open("sample.json", "w") as file:
@@ -62,6 +64,7 @@ with open("sample.json", "r") as in_file:
     json_object = json.load(in_file)
 
 print(json_object)
+####======================== End of extracting the objects in JSON format ==========#####
 f.write("text provided by the modell:\n" + repr(json_object) + "\n" + "temperature: "+ str(temper)+"\n")
 
 print(type(json_object))
